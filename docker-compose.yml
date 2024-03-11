@@ -11,3 +11,16 @@ services:
     ports:
       - 514:514/tcp
       - 514:514/udp
+
+  victoria-metrics:
+    container_name: victoriametrics
+    image: victoriametrics/victoria-metrics:heads-syslog-0-gb0336ef6e-dirty-6304960d
+    ports:
+      - "8428:8428"
+    # volumes:
+    #   - ./victoria-metrics-data:/victoria-metrics-data
+    command: 
+      - "--loggerOutput=syslog"
+      - "--syslog-address=rsyslog:514"
+    depends_on:
+      - rsyslog
